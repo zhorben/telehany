@@ -1,9 +1,9 @@
 import { withApollo } from '../apollo/client'
 import { useState } from 'react'
 
-import Register from '../components/Register'
-import Login from '../components/Login'
-import Main from '../components/Main'
+import Register from '../src/components/Register'
+import Login from '../src/components/Login'
+import Main from '../src/components/Main'
 
 const Auth = () => {
   const [activeTab, setActiveTab] = useState('login')
@@ -17,7 +17,6 @@ const Auth = () => {
         ? <Login />
         : <Register />
       }
-      
 
       <style jsx>{`
         button {

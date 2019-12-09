@@ -2,12 +2,11 @@ import { useEffect } from 'react'
 import { withApollo } from '../apollo/client'
 import { CONFIRM } from './graphql/auth'
 import { useMutation } from '@apollo/react-hooks'
-import { useRouter }  from 'next/router'
+import Router from 'next/router'
 
 import Errors from '../components/Errors'
 
 const Confirm = ({ verificationToken }) => {
-  const router = useRouter()
   const [confirm, { loading, data, error }] = useMutation(CONFIRM, {
     variables: { verificationToken }
   })
@@ -18,7 +17,7 @@ const Confirm = ({ verificationToken }) => {
 
   if (data) {
     localStorage.setItem('token', data.confirm.token)
-    router.push('/')
+    Router.push('/')
   }
 
   return (

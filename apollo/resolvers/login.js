@@ -1,4 +1,4 @@
-import User from '../../models/User'
+import User from '../models/User'
 import bcrypt from 'bcryptjs'
 import { createToken } from '../connectors/jwt'
 import { UserInputError, AuthenticationError } from 'apollo-server-micro'

@@ -2,20 +2,17 @@ import React, { createContext, useState, useEffect } from 'react'
 
 export const AuthContext = createContext()
 
-const AuthContextProvider = (props) => {
-	const [isAuthenticated, setAuth] = useState(
-		localStorage.getItem('token') ? true : false
-	)
+export const AuthProvider = ({ children }) => {
+	const [isAuthenticated, setAuth] = useState()
 
-	//Methods to change states
-	const toggleAuth = () => setAuth(!isAuthenticated)
+	useEffect(() => {
+		setAuth(localStorage.getItem('token') ? true : false)
+	}, [])
 
 	return (
-		<AuthContext.Provider value={{ isAuthenticated, toggleAuth }}>
-			{props.children}
+		<AuthContext.Provider value={{ isAuthenticated, setAuth }}>
+			{children}
 		</AuthContext.Provider>
 	)
 
 }
-
-export default AuthContextProvider

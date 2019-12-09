@@ -1,13 +1,13 @@
 import App from 'next/app'
-// import { CounterProvider } from '../components/Counter'
+import { AuthProvider } from '../src/contexts/AuthContext'
 
 class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props
     return (
-      // <CounterProvider>
+      <AuthProvider>
         <Component {...pageProps} />
-      // </CounterProvider>
+      </AuthProvider>
     )
   }
 }

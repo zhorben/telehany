@@ -1,11 +1,12 @@
-import { LOGIN } from '../pages/graphql/auth'
-import { useState } from 'react'
+import { LOGIN } from '../../pages/graphql/auth'
+import { useState, useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { useRouter }  from 'next/router'
+import Router from 'next/router'
 import Errors from './Errors'
+import { AuthContext } from '../contexts/AuthContext'
 
 export default function Register() {
-  const router = useRouter()
+  const { setAuth } = useContext(AuthContext)
   const [password, updatePassword] = useState('123456')
   const [email, updateEmail] = useState('arthurzherko@gmail.com')
   
@@ -14,8 +15,9 @@ export default function Register() {
   })
 
   if (data) {
-    localStorage.setItem('token', data.login.token)
-    router.push('/')
+    window.localStorage.setItem('token', data.login.token)
+    setAuth(true)
+    Router.push('/')
   }
   
   return (

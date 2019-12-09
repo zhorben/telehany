@@ -1,10 +1,12 @@
+import { useContext } from 'react'
 import { withApollo } from '../apollo/client'
-import { useState, useEffect } from 'react'
 import gql from 'graphql-tag'
 import Link from 'next/link'
 import { useQuery } from '@apollo/react-hooks'
 
-import Main from '../components/Main'
+import Main from '../src/components/Main'
+
+import { AuthContext } from '../src/contexts/AuthContext'
 
 const VIEWER = gql`
   query ViewerQuery {
@@ -17,25 +19,23 @@ const VIEWER = gql`
 
 const Index = () => {
   const { data: { viewer } } = useQuery(VIEWER)
-  const [token, setKey] = useState(undefined)
+  const { isAuthenticated, setAuth } = useContext(AuthContext)
 
-  useEffect(() => {
-    setKey(localStorage.getItem('token'))
-  }, [setKey])
-
-  console.log(token, '--- token')
+  const logout = () => {
+    localStorage.clear()
+    setAuth(false)
+  }
 
   if (viewer) {
     return (
       <Main>
 
-        {token
-          ? <button onClick={() => localStorage.clear()}>Logout</button>
+        {isAuthenticated
+          ? <button onClick={logout}>Logout</button>
           : <Link href="/auth">
               <a>authenticate</a>
             </Link>
         }
-
         
       </Main>
     )

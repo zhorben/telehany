@@ -1,4 +1,4 @@
-import User from '../../models/User'
+import User from '../models/User'
 import { createToken } from '../connectors/jwt'
 import { AuthenticationError } from 'apollo-server-micro'
 import { jwtSecret } from '../../config/default'

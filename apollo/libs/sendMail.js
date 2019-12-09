@@ -1,7 +1,7 @@
 import Letter from '../models/Letter'
 
 import juice from 'juice'
-import config from '../config/default'
+import config from '../../config/default'
 import path from 'path'
 import AWS from 'aws-sdk'
 import pug from 'pug'

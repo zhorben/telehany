@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 import config from '../../config/default'
-import User from '../../models/User'
-import { sendMail } from '../../libs/sendMail'
+import User from '../models/User'
+import { sendMail } from '../libs/sendMail'
 import { UserInputError } from 'apollo-server-micro'
 import uuid4 from 'uuid4'
 
