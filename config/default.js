@@ -1,6 +1,3 @@
-
-const defer = require('config/defer')
-const path = require('path')
 const dotenv = require('dotenv')
 
 dotenv.config()
@@ -33,7 +30,7 @@ module.exports = {
   },
   template: {
     // template.root uses config.root
-    root: defer.deferConfig((cfg) => path.join(cfg.root, 'app/templates'))
+    root: process.cwd() + '/templates'
   },
   providers: {
     facebook: {

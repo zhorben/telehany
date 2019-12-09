@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { REGISTER } from './graphql/auth'
 
+import Errors from '../components/Errors'
+
 const VIEWER = gql`
   query ViewerQuery {
     viewer {
@@ -23,16 +25,12 @@ const Index = () => {
   const [password, updatePassword] = useState('123456')
   const [email, updateEmail] = useState('arthurzherko@gmail.com')
 
-  const [register, { data }] = useMutation(REGISTER, {
+  const [register, { loading, data, error }] = useMutation(REGISTER, {
     variables: { displayName, password, email }
   })
 
   const submitForm = (event) => {
     register(email, password, displayName)
-  }
-
-  if (data) {
-    console.log(data)
   }
 
   if (viewer) {
@@ -51,8 +49,16 @@ const Index = () => {
           <input value={password} onChange={(evt) => updatePassword(evt.target.value)} type="text"/>
           <input value={email} onChange={(evt) => updateEmail(evt.target.value)} type="text"/>
 
-          <button onClick={submitForm}>Submit</button>
+          <button onClick={submitForm}>
+            {loading ? 'Loading...' : 'Submit'}
+          </button>
         </div>
+
+        <Errors error={error} />
+
+        {data && (
+          <div>User {data.register.displayName} was successfully registered!</div>
+        )}
 
         <style jsx>
         {`

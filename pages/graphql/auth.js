@@ -7,3 +7,11 @@ export const REGISTER = gql`
     }
   }
 `
+
+export const CONFIRM = gql`
+  mutation confirm($verificationToken: String!) {
+    confirm(verificationToken: $verificationToken) {
+      token
+    }
+  }
+`

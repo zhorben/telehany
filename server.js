@@ -16,10 +16,10 @@ app.prepare().then(() => {
   //   ctx.respond = false
   // })
 
-  // router.get('/b', async ctx => {
-  //   await app.render(ctx.req, ctx.res, '/b', ctx.query)
-  //   ctx.respond = false
-  // })
+  router.get('/confirm/:verificationToken', async ctx => {
+    await app.render(ctx.req, ctx.res, '/confirm', { verificationToken: ctx.params.verificationToken })
+    ctx.respond = false
+  })
 
   router.all('*', async ctx => {
     await handle(ctx.req, ctx.res)

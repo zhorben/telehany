@@ -15,7 +15,12 @@ export const typeDefs = gql`
 
   type Mutation {
     register(email: String!, password: String!, displayName: String!): User!
+    confirm(verificationToken: String!): Token!
     login(email: String!, password: String!): LoginResponse!
+  }
+
+  type Token {
+    token: String!
   }
 
   type LoginResponse {
