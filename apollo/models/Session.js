@@ -1,6 +1,6 @@
 
 import mongoose from 'mongoose'
-import connection from '../libs/connection'
+import connection from '../../libs/connection'
 
 const schema = new mongoose.Schema({
   token: {

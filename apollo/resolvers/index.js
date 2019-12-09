@@ -1,5 +1,6 @@
 import register from './register'
 import confirm from './confirm'
+import login from './login'
 
 export const resolvers = {
   Query: {
@@ -9,6 +10,7 @@ export const resolvers = {
   },
   Mutation: {
     register,
-    confirm
+    confirm,
+    login
   },
 }

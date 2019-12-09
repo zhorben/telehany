@@ -6,7 +6,7 @@ import { jwtSecret } from '../../config/default'
 const getMe = async (token) => {
   if (token) {
     try {
-      return await jwt.verify(token, jwtSecret, {
+      return await jwt.verify(token.split(' ')[1], jwtSecret, {
         algorithm: ['HS256']
       })
     } catch (e) {
@@ -19,7 +19,7 @@ const getMe = async (token) => {
 const apolloServer = new ApolloServer({
   schema,
   context: async ({ req, res }) => {
-    const user = await getMe(req.headers.authorization.split(' ')[1] || '')
+    const user = await getMe(req.headers.authorization)
 
     return {
       me: user
