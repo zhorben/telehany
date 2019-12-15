@@ -1,4 +1,4 @@
-import { LOGIN } from '../../pages/graphql/auth'
+import { LOGIN } from '../graphql/auth'
 import { useState, useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import Router from 'next/router'

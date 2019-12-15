@@ -1,4 +1,4 @@
-import { REGISTER } from '../../pages/graphql/auth'
+import { REGISTER } from '../graphql/auth'
 import { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import Errors from './Errors'

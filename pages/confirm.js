@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { withApollo } from '../apollo/client'
-import { CONFIRM } from './graphql/auth'
+import { CONFIRM } from '../src/graphql/auth'
 import { useMutation } from '@apollo/react-hooks'
 import Router from 'next/router'
 
