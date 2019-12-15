@@ -1,0 +1,15 @@
+{
+  "short_name": "Zhorben",
+  "name": "Zhorben",
+  "icons": [
+    {
+      "src": "./favicons/favicon.ico",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": ".",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "theme_color": "#000000"
+}
