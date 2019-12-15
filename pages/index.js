@@ -37,14 +37,10 @@ const Index = () => {
             </Link>
         }
 
-        <Link href="/private">
-          <a>private</a>
-        </Link>
-
         <style jsx>{`
           a {
             margin-right: 20px;
-          }  
+          }
         `}</style>
         
       </Main>
