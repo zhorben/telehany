@@ -1,7 +1,7 @@
 {
   "apps" : [{
     "name": "zhorben",
-    "script": "index.js",
+    "script": "server.js",
     "instances": 2,
     "exec_mode": "cluster",
     "max_memory_restart": "2G",
