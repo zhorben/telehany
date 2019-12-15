@@ -4,7 +4,7 @@ import { CONFIRM } from './graphql/auth'
 import { useMutation } from '@apollo/react-hooks'
 import Router from 'next/router'
 
-import Errors from '../components/Errors'
+import Errors from '../src/components/Errors'
 
 const Confirm = ({ verificationToken }) => {
   const [confirm, { loading, data, error }] = useMutation(CONFIRM, {
