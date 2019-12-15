@@ -7,7 +7,7 @@ import { jwtSecret } from '../../config/default'
 export default async (_parent, { email, password }) => {
   const user = await User.findOne({ email }).then(async user => {
     if (!user) {
-      throw new UserInputError('User not found', { errors })
+      throw new UserInputError('User not found')
     }
 
     const passwordIsValid = await bcrypt.compare(password, user.password)

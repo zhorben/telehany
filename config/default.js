@@ -2,6 +2,8 @@ const dotenv = require('dotenv')
 
 dotenv.config()
 
+console.log(process.env.MAIL_PASSWORD, '--- MAIL_PASSWORD')
+
 module.exports = {
   // secret data can be moved to env variables
   // or a separate config
@@ -30,7 +32,7 @@ module.exports = {
   },
   template: {
     // template.root uses config.root
-    root: process.cwd() + '/templates'
+    root: process.cwd() + '/apollo/templates'
   },
   providers: {
     facebook: {
