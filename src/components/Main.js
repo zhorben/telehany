@@ -3,40 +3,59 @@ export default ({ children }) => (
     {children}
 
     <style jsx global>{`
-      * {
-        font-family: Menlo, Monaco, 'Lucida Console', 'Liberation Mono',
-          'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New',
-          monospace, serif;
+      :root {
+        --font-sans: -apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        --geist-foreground: #000;
+        --accents-2: #eaeaea;
+        --accents-5: #666;
       }
+
+      * {
+        box-sizing: inherit;
+      }
+
+      html {
+        height: 100%;
+        box-sizing: border-box;
+      }
+
       body {
         margin: 0;
-        padding: 25px 50px;
-      }
-      a {
-        color: #22bad9;
-      }
-      p {
         font-size: 14px;
+        min-height: 100%;
+        position: relative;
+        text-rendering: optimizeLegibility;
+        display: block;
+        font-family: var(--font-sans);
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      a:visited {
+        color: initial;
+      }
+
+      .input {
+        font-size: 14px;
+        padding: 4px 10px;
+        border-radius: 5px;
+        border: 1px solid var(--accents-2);
+        transition: border 0.2s ease, color 0.2s ease;
         line-height: 24px;
       }
-      article {
-        margin: 0 auto;
-        max-width: 650px;
+
+      .input:focus {
+        outline: none;
+        border: 1px solid var(--accents-5);
       }
+
       button {
-        align-items: center;
-        background-color: #22bad9;
         border: 0;
-        color: white;
-        padding: 5px 7px;
-        transition: background-color 0.3s;
+        cursor: pointer;
       }
-      button:active {
-        background-color: #1b9db7;
-      }
-      button:disabled {
-        background-color: #b5bebf;
-      }
+
       button:focus {
         outline: none;
       }

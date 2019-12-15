@@ -4,14 +4,17 @@ import { useState } from 'react'
 import Register from '../src/components/Register'
 import Login from '../src/components/Login'
 import Main from '../src/components/Main'
+import Header from '../src/components/Header'
 
 const Auth = () => {
   const [activeTab, setActiveTab] = useState('login')
 
   return (
     <Main>
-      <button onClick={() => setActiveTab('login')}>Login</button>
-      <button onClick={() => setActiveTab('register')}>Register</button>
+
+      <Header />
+
+      <h1>Log in to Zhorben</h1>
 
       {activeTab === 'login'
         ? <Login />
