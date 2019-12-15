@@ -66,11 +66,11 @@ export const sendMail = async (options = {}) => {
     to: {
       address: options.to,
     },
-    subject: options.subject
-    // from: {
-    //   name: sender.fromName,
-    //   address: sender.fromEmail
-    // },
+    subject: options.subject,
+    from: {
+      name: sender.fromName,
+      address: sender.fromEmail
+    },
   }
 
   const transportResponse = await transport.sendMail(message)
