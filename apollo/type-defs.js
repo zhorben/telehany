@@ -11,6 +11,7 @@ export const typeDefs = gql`
   type Query {
     viewer: User
     currentUser: User!
+    designers: [Designer]
   }
 
   type Mutation {
@@ -26,5 +27,12 @@ export const typeDefs = gql`
   type LoginResponse {
     token: String
     user: User
+  }
+
+  type Designer {
+    id: ID!
+    title: String!
+    fullTitle: String!
+    description: String!
   }
 `

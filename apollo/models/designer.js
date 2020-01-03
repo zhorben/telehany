@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
+import connection from '../libs/connection'
 
 const designerSchema = new mongoose.Schema({
   title: {
@@ -15,18 +16,9 @@ const designerSchema = new mongoose.Schema({
     type: String,
     required: "Description отсутствует."
   }
-});
+})
 
-designerSchema.methods.getPublicFields = function() {
-  return {
-    id: this._id,
-    title: this.title,
-    fullTitle: this.fullTitle,
-    description: this.description
-  }
-};
-
-designerSchema.statics.publicFields = ['title', 'fullTitle', 'description'];
+designerSchema.statics.publicFields = ['title', 'fullTitle', 'description']
 
 designerSchema.index(
   { title: 'text', description: 'text' },
@@ -34,6 +26,6 @@ designerSchema.index(
     weights: { title: 10, description: 5 },
     default_language: 'english'
   }
-);
+)
 
-module.exports = mongoose.model('Designer', designerSchema);
+export default connection.model('Designer', designerSchema)

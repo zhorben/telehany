@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import { AuthContext } from '../contexts/AuthContext'
 
-export default function Header() {
+export default () => {
   const { isAuthenticated, setAuth } = useContext(AuthContext)
   
   const logout = () => {
