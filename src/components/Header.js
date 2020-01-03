@@ -11,8 +11,6 @@ export default function Header() {
     setAuth(false)
   }
 
-  console.log('--- hei')
-
   return (
     <header className="minimal">
       <aside>

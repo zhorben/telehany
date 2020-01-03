@@ -1,8 +1,8 @@
-export default function Error({ error }) {
+export default ({ error }) => {
   if (!error) return null
 
   return (
-    <div>
+    <div className="errors">
       {error.graphQLErrors.map(({ message }, i) => (
         <span key={i} style={{ color: 'red' }}>
           {message}
