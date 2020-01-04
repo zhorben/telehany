@@ -11,6 +11,7 @@ export const typeDefs = gql`
   type Query {
     currentUser: User!
     designers: [Designer]
+    designer(id: ID!): Designer
   }
 
   type Mutation {

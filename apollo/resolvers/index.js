@@ -6,7 +6,8 @@ import Designer from '../models/Designer'
 
 export const resolvers = {
   Query: {
-    designers: async () => Designer.find()
+    designers: async () => Designer.find(),
+    designer: async (_parent, { id }) => Designer.findById(id)
   },
   Mutation: {
     register,
