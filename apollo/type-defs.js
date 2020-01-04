@@ -9,7 +9,6 @@ export const typeDefs = gql`
   }
 
   type Query {
-    viewer: User
     currentUser: User!
     designers: [Designer]
   }
@@ -32,7 +31,7 @@ export const typeDefs = gql`
   type Designer {
     id: ID!
     title: String!
-    fullTitle: String!
-    description: String!
+    fullTitle: String
+    description: String
   }
 `

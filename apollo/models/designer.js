@@ -8,13 +8,11 @@ const designerSchema = new mongoose.Schema({
   },
 
   fullTitle: {
-    type: String,
-    required: "FullTitle отсутствует."
+    type: String
   },
 
   description: {
-    type: String,
-    required: "Description отсутствует."
+    type: String
   }
 })
 

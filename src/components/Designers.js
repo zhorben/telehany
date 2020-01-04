@@ -1,24 +1,23 @@
 import React from 'react'
-import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
-
-const DESIGNERS = gql`
-  query designers {
-    designers {
-      title
-      fullTitle
-      description
-    }
-  }
-`
+import { DESIGNERS } from '../graphql/designer'
 
 export default () => {
-  const { data } = useQuery(DESIGNERS)
+  const { loading, data: { designers } } = useQuery(DESIGNERS)
 
-  data && console.log(data, '--- data')
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="designers">
+      <h3>Designers</h3>
+
+      {designers.map(({ title }, index) =>
+        <div key={index}>
+          {title}
+        </div>
+      )}
 
     <style jsx>{`
       .designers {
