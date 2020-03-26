@@ -1,15 +1,12 @@
-import { useContext } from 'react'
+import { useQuery } from '@apollo/react-hooks'
 import Link from 'next/link'
 
-import { AuthContext } from '../contexts/AuthContext'
+import { VIEWER } from '../graphql/user'
 
-export default () => {
-  const { isAuthenticated, setAuth } = useContext(AuthContext)
-  
-  const logout = () => {
-    localStorage.clear()
-    setAuth(false)
-  }
+import SignOut from './SignOut'
+
+export default function Header() {
+  const { loading, data } = useQuery(VIEWER)
 
   return (
     <header className="minimal">
@@ -18,19 +15,21 @@ export default () => {
           <a className="logo">Zhorben</a>
         </Link>
       </aside>
-      <aside>
-        {isAuthenticated
-          ? <button onClick={logout}>Logout</button>
-          : <React.Fragment>
-              <Link href="/login">
-                <a className="login">login</a>
+      {loading === false &&
+        <aside>
+          <SignOut />
+          {data.viewer === null &&
+            <React.Fragment>
+              <Link href="/signin">
+                <a className="signIn">Sign In</a>
               </Link>
-              <Link href="/register">
-                <a className="register">Register</a>
+              <Link href="/signup">
+                <a className="signUp">Sign Up</a>
               </Link>
             </React.Fragment>
-        }
-      </aside>
+          }
+        </aside>
+      }
 
       <style jsx>{`
         .logo {
@@ -54,7 +53,7 @@ export default () => {
         }
 
         button,
-        a.login {
+        a.signIn {
           text-transform: capitalize;
           color: #666;
           transition: color 0.2s ease 0s;
@@ -65,11 +64,11 @@ export default () => {
           padding: 10px;
         }
 
-        a.login:hover {
+        a.signIn:hover {
           color: #000;
         }
 
-        a.register {
+        a.signUp {
           background: rgb(0, 112, 243);
           padding: 6px 12px;
           color: #fff;
@@ -85,7 +84,7 @@ export default () => {
           transition: all 0.2s ease;
         }
 
-        a.register:hover {
+        a.signUp:hover {
           background: transparent;
           color: rgb(0, 112, 243);
         }

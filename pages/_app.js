@@ -1,7 +1,6 @@
 import App from 'next/app'
 import { DefaultSeo } from 'next-seo'
 import Head from 'next/head'
-import { AuthProvider } from '../src/contexts/AuthContext'
 
 import SEO from '../next-seo.config'
 
@@ -33,9 +32,7 @@ class MyApp extends App {
           <meta name="theme-color" content="#ffffff" />
         </Head>
 
-        <AuthProvider>
-          <Component {...pageProps} />
-        </AuthProvider>
+        <Component {...pageProps} />
       </React.Fragment>
     )
   }
