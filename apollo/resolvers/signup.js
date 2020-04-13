@@ -1,23 +1,24 @@
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcrypt'
 import config from '../../config/default'
 import User from '../models/User'
 import { sendMail } from '../libs/sendMail'
 import { UserInputError } from 'apollo-server-micro'
-import uuid4 from 'uuid4'
+import v4 from 'uuid/v4'
 
-export default async (_parent, { email, password, displayName }) => {
-  const hashedPassword = await bcrypt.hash(password, 10)
-  const checkIfExists = await User.findOne({ email }).then()
+export default async (_parent, args) => {
+  const salt = bcrypt.genSaltSync()
+  const hashedPassword = await bcrypt.hashSync(args.input.password, salt)
+  const checkIfExists = await User.findOne({ email: args.input.email })
 
   if (checkIfExists) {
     throw new UserInputError('User with that email already exists')
   }
 
-  const verificationToken = uuid4()
+  const verificationToken = v4()
 
   const user = await User.create({
-    email: email.toLowerCase(),
-    displayName,
+    email: args.input.email.toLowerCase(),
+    displayName: args.input.displayName,
     verificationToken,
     verifiedEmail: false,
     password: hashedPassword
