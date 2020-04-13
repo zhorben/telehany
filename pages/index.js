@@ -6,14 +6,18 @@ import Main from '../src/components/Main'
 import Header from '../src/components/Header'
 import Designers from '../src/components/Designers'
 
-const Index = () => {
-  const { data } = useQuery(VIEWER)
+function Index() {
+  const viewerQuery = useQuery(VIEWER)
 
-  console.log(data, '--- data index')
+  console.log(viewerQuery, '--- viewerQuery index')
+
+  if (viewerQuery.called) {
+    // viewerQuery.refetch()
+  }
 
   return (
     <Main>
-      <Header />
+      <Header viewerQuery={viewerQuery} />
 
       <div className="wrapper">      
         <h1>Mens Designer Clothes Since 2019</h1>
