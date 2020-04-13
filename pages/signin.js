@@ -10,17 +10,13 @@ import Main from '../src/components/Main'
 import Header from '../src/components/Header'
 import Errors from '../src/components/Errors'
 
-function SignIn() {
+const SignIn = () => {
   const client = useApolloClient()
   const router = useRouter()
   const [signIn, { loading, error }] = useMutation(SIGN_IN)
-  const viewerQuery = useQuery(VIEWER)
+  const { data } = useQuery(VIEWER)
 
-  console.log(viewerQuery, '--- viewerQuery signin')
-
-  if (viewerQuery.called) {
-    // viewerQuery.refetch()
-  }
+  console.log(data, '--- data signin')
 
   const formik = useFormik({
     initialValues: {
@@ -31,14 +27,14 @@ function SignIn() {
       await client.resetStore()
       const { data } = await signIn({ variables: { email, password }})
       if (data.signIn.user) {
-        await router.push('/')
+        router.push('/')
       }
     }
   })
 
   return (
     <Main>
-      <Header viewerQuery={viewerQuery} />
+      <Header />
 
       <div className="wrapper signIn">
         <h1>Log in to Zhorben</h1>

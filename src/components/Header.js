@@ -5,8 +5,8 @@ import { VIEWER } from '../graphql/user'
 
 import SignOut from './SignOut'
 
-export default function Header({ viewerQuery }) {
-  const { loading, data } = viewerQuery
+export default function Header() {
+  const { loading, data } = useQuery(VIEWER)
 
   return (
     <header className="minimal">
