@@ -1,16 +1,10 @@
 import { withApollo } from '../apollo/client'
-import { useQuery } from '@apollo/react-hooks'
-import { VIEWER } from '../src/graphql/user'
 
 import Main from '../src/components/Main'
 import Header from '../src/components/Header'
 import Designers from '../src/components/Designers'
 
 const Index = () => {
-  const { data } = useQuery(VIEWER)
-
-  console.log(data, '--- data index')
-
   return (
     <Main>
       <Header />

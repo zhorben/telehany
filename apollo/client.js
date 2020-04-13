@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-// import { setContext } from 'apollo-link-context'
+import { setContext } from 'apollo-link-context'
 
 let apolloClient = null
 
@@ -43,10 +43,7 @@ export function withApollo(PageComponent, { ssr = true } = {}) {
 
       // Initialize ApolloClient, add it to the ctx object so
       // we can use it in `PageComponent.getInitialProp`.
-      const apolloClient = (ctx.apolloClient = initApolloClient({
-        res: ctx.res,
-        req: ctx.req,
-      }))
+      const apolloClient = (ctx.apolloClient = initApolloClient())
 
       // Run wrapped getInitialProps methods
       let pageProps = {}
@@ -79,7 +76,7 @@ export function withApollo(PageComponent, { ssr = true } = {}) {
             // Prevent Apollo Client GraphQL errors from crashing SSR.
             // Handle them in components via the data.error prop:
             // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
-            console.error('Error while running хуй `getDataFromTree`', error)
+            console.error('Error while running `getDataFromTree`', error)
           }
 
           // getDataFromTree does not call componentWillUnmount
@@ -106,16 +103,16 @@ export function withApollo(PageComponent, { ssr = true } = {}) {
  * Creates or reuses apollo client in the browser.
  * @param  {Object} initialState
  */
-function initApolloClient(ctx, initialState) {
+function initApolloClient(initialState) {
   // Make sure to create a new client for every server-side request so that data
   // isn't shared between connections (which would be bad)
   if (typeof window === 'undefined') {
-    return createApolloClient(ctx, initialState)
+    return createApolloClient(initialState)
   }
 
   // Reuse client on the client-side
   if (!apolloClient) {
-    apolloClient = createApolloClient(ctx, initialState)
+    apolloClient = createApolloClient(initialState)
   }
 
   return apolloClient
@@ -125,44 +122,42 @@ function initApolloClient(ctx, initialState) {
  * Creates and configures the ApolloClient
  * @param  {Object} [initialState={}]
  */
-function createApolloClient(ctx = {}, initialState = {}) {
+function createApolloClient(initialState = {}) {
   const ssrMode = typeof window === 'undefined'
   const cache = new InMemoryCache().restore(initialState)
 
   // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
   return new ApolloClient({
     ssrMode,
-    // link: authLink.concat(createIsomorphLink()),
-    link: createIsomorphLink(ctx),
+    link: authLink.concat(createIsomorphLink()),
     cache,
   })
 }
 
-// const authLink = setContext((_, { headers }) => {
-//   if (typeof window !== 'undefined') {
-//     // get the authentication token from local storage if it exists
-//     const token = localStorage.getItem('token')
-//     // return the headers to the context so httpLink can read them
-//     return {
-//       headers: {
-//         ...headers,
-//         authorization: token ? `Bearer ${token}` : ''
-//       }
-//     }
-//   }
-// })
+const authLink = setContext((_, { headers }) => {
+  if (typeof window !== 'undefined') {
+    // get the authentication token from local storage if it exists
+    const token = localStorage.getItem('token')
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : ''
+      }
+    }
+  }
+})
 
-function createIsomorphLink(ctx) {
+function createIsomorphLink() {
   if (typeof window === 'undefined') {
     const { SchemaLink } = require('apollo-link-schema')
     const { schema } = require('./schema')
-    return new SchemaLink({ schema, context: ctx })
+    return new SchemaLink({ schema })
   } else {
     const { HttpLink } = require('apollo-link-http')
-
     return new HttpLink({
       uri: '/api/graphql',
-      credentials: 'same-origin',
+      credentials: 'same-origin'
     })
   }
 }

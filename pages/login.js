@@ -1,49 +1,42 @@
-import React from 'react'
+import { useContext } from 'react'
 import { withApollo } from '../apollo/client'
-import { useFormik } from 'formik'
-import { SIGN_UP } from '../src/graphql/auth'
+import { LOGIN } from '../src/graphql/auth'
 import { useMutation } from '@apollo/react-hooks'
-import { useRouter } from 'next/router'
+import Router from 'next/router'
+import { AuthContext } from '../src/contexts/AuthContext'
+import { useFormik } from 'formik'
 
 import Main from '../src/components/Main'
 import Header from '../src/components/Header'
 import Errors from '../src/components/Errors'
 
-const SignUp = () => {
-  const router = useRouter()
+const Login = () => {
+  const { setAuth } = useContext(AuthContext)
+
   const formik = useFormik({
     initialValues: {
-      displayName: '',
-      email: '',
-      password: ''
+      email: process.env.NODE_ENV === 'development' ? 'arthurzherko@gmail.com' : '',
+      password: process.env.NODE_ENV === 'development' ? '123456' : ''
     },
-    onSubmit: ({ displayName, password, email }) => signUp({ variables: { displayName, password, email }})
+    onSubmit: ({ email, password }) => login({ variables: { email, password }})
   })
 
-  const [signUp, { loading, data, error }] = useMutation(SIGN_UP)
+  const [login, { loading, data, error }] = useMutation(LOGIN)
 
   if (data) {
-    // router.push('/login')
+    window.localStorage.setItem('token', data.login.token)
+    setAuth(true)
+    Router.push('/')
   }
 
   return (
     <Main>
       <Header />
 
-      <div className="wrapper signUp">
-        <h1>Sign Up for Zhorben</h1>
+      <div className="wrapper login">
+        <h1>Log in to Zhorben</h1>
 
         <form onSubmit={formik.handleSubmit}>
-            <input
-              required
-              name="displayName"
-              type="text"
-              className="input"
-              placeholder="First Name"
-              onChange={formik.handleChange}
-              value={formik.values.displayName}
-            />
-
             <input
               required
               name="email"
@@ -59,7 +52,7 @@ const SignUp = () => {
               name="password"
               type="password"
               className="input"
-              placeholder="Password"
+              placeholder="password"
               onChange={formik.handleChange}
               value={formik.values.password}
             />
@@ -120,8 +113,8 @@ const SignUp = () => {
           margin-top: 15px;
         }
       `}</style>
-    </Main>  
+    </Main>
   )
 }
 
-export default withApollo(SignUp)
+export default withApollo(Login)

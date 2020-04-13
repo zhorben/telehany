@@ -9,13 +9,13 @@ const userSchema = new mongoose.Schema({
   email:         {
     type:     String,
     unique:   "Такой email уже существует",
-    required: "E-mail пользователя не должен быть пустым",
+    required: "E-mail пользователя не должен быть пустым.",
     validate: [
       {
         validator: function checkEmail(value) {
           return this.deleted ? true : /^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(value);
         },
-        msg:       'Укажите, пожалуйста, корректный email'
+        msg:       'Укажите, пожалуйста, корректный email.'
       }
     ]
   },

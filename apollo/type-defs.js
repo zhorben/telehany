@@ -4,11 +4,29 @@ export const typeDefs = gql`
   type User {
     id: ID!
     displayName: String!
+    password: String!
     email: String!
+  }
+
+  type Query {
+    currentUser: User!
+    designers: [Designer]
+    designer(id: ID!): Designer
+  }
+
+  type Mutation {
+    register(email: String!, password: String!, displayName: String!): User!
+    confirm(verificationToken: String!): Token!
+    login(email: String!, password: String!): Token!
   }
 
   type Token {
     token: String!
+  }
+
+  type LoginResponse {
+    token: String
+    user: User
   }
 
   type Designer {
@@ -16,39 +34,5 @@ export const typeDefs = gql`
     title: String!
     fullTitle: String
     description: String
-  }
-
-  input SignUpInput {
-    email: String!
-    password: String!
-    displayName: String!
-  }
-
-  input SignInInput {
-    email: String!
-    password: String!
-  }
-
-  type SignUpPayload {
-    user: User!
-  }
-
-  type SignInPayload {
-    user: User!
-  }
-
-  type Query {
-    user(id: ID!): User!
-    users: [User]!
-    viewer: User
-    designers: [Designer]
-    designer(id: ID!): Designer
-  }
-
-  type Mutation {
-    signUp(input: SignUpInput!): SignUpPayload!
-    signIn(input: SignInInput!): SignInPayload!
-    signOut: Boolean!
-    confirm(verificationToken: String!): Token!
   }
 `

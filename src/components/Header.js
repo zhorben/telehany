@@ -1,12 +1,15 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useContext } from 'react'
 import Link from 'next/link'
 
-import { VIEWER } from '../graphql/user'
+import { AuthContext } from '../contexts/AuthContext'
 
-import SignOut from './SignOut'
-
-export default function Header() {
-  const { loading, data } = useQuery(VIEWER)
+export default () => {
+  const { isAuthenticated, setAuth } = useContext(AuthContext)
+  
+  const logout = () => {
+    localStorage.clear()
+    setAuth(false)
+  }
 
   return (
     <header className="minimal">
@@ -15,21 +18,19 @@ export default function Header() {
           <a className="logo">Zhorben</a>
         </Link>
       </aside>
-      {loading === false &&
-        <aside>
-          <SignOut />
-          {data.viewer === null &&
-            <React.Fragment>
-              <Link href="/signin">
-                <a className="signIn">Sign In</a>
+      <aside>
+        {isAuthenticated
+          ? <button onClick={logout}>Logout</button>
+          : <React.Fragment>
+              <Link href="/login">
+                <a className="login">login</a>
               </Link>
-              <Link href="/signup">
-                <a className="signUp">Sign Up</a>
+              <Link href="/register">
+                <a className="register">Register</a>
               </Link>
             </React.Fragment>
-          }
-        </aside>
-      }
+        }
+      </aside>
 
       <style jsx>{`
         .logo {
@@ -53,7 +54,7 @@ export default function Header() {
         }
 
         button,
-        a.signIn {
+        a.login {
           text-transform: capitalize;
           color: #666;
           transition: color 0.2s ease 0s;
@@ -64,11 +65,11 @@ export default function Header() {
           padding: 10px;
         }
 
-        a.signIn:hover {
+        a.login:hover {
           color: #000;
         }
 
-        a.signUp {
+        a.register {
           background: rgb(0, 112, 243);
           padding: 6px 12px;
           color: #fff;
@@ -84,7 +85,7 @@ export default function Header() {
           transition: all 0.2s ease;
         }
 
-        a.signUp:hover {
+        a.register:hover {
           background: transparent;
           color: rgb(0, 112, 243);
         }
